@@ -2,34 +2,34 @@
 require 'vendor/autoload.php';
 
 use Cowsayphp\Farm;
+use Cowsayphp\Farm\Cow;
 use Cowsayphp\Farm\Dragon;
+use Cowsayphp\Farm\Kirby;
 use Cowsayphp\Farm\Netero2;
 use Cowsayphp\Farm\Netero;
 use Cowsayphp\Farm\Tux;
+use Cowsayphp\Farm\Whale;
 
 $args = getopt('c::m:');
 
-if (!array_key_exists('c', $args)) {
-    return print("-c の引数は必須です。");
-}
+$char = $args['c'] ?? 'cow';
 
-$arg = $args['c'];
-$msg = $args['m'] ?? "Ohmg I'm a cow!";
-
-switch ($arg) {
+switch ($char) {
     case 'tux':
         $cow = Farm::create(Tux::class);
         break;
     case 'dragon':
         $cow = Farm::create(Dragon::class);
         break;
-    case 'netero':
-        $cow = Farm::create(Netero::class);
+    case 'whale':
+        $cow = Farm::create(Whale::class);
         break;
-    case 'netero2':
-        $cow = Farm::create(Netero2::class);
-        $msg = $args['m'] ?? "感謝するぜ!お前と出会えた。これまでの全てに!";
+    case 'kirby':
+        $cow = Farm::create(Kirby::class);
+        $msg = 'ぽよぽよ〜';
         break;
+    default:
+        $cow = Farm::create(Cow::class);
 }
 
-echo $cow->say($msg);
+echo $cow->say($args['m'] ?? $msg ?? 'Ohmg I\'m a cow!');
